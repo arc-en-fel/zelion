@@ -1,4 +1,5 @@
 /* Reset and background */
+/* Reset and background */
 body, html {
   margin: 0;
   padding: 0;
@@ -8,7 +9,310 @@ body, html {
   scroll-behavior: smooth;
 }
 
-/* Glassmorphism navbar */
+/* Navbar */
+.navbar {
+  
+  top: 0;
+  width: 100%;
+  padding: -10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px; /* 🆕 Add this */
+  z-index: 1000;
+}
+
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+/* Nav Links — base (no display defined here) */
+.nav-links {
+  display: flex;
+  align-items: center;  /* 🆕 Helps vertical alignment */
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffffcc;
+  transition: color 0.3s ease;
+  line-height: 1.6; /* 🆕 Ensures proper alignment */
+}
+
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+/* Hamburger menu */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  z-index: 1100;
+}
+
+/* Desktop nav */
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.95);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    gap: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+
+/* Section layout */
+.section {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-left: 2rem;
+  padding-right: 5rem;
+  display: flex;
+  scroll-margin-top: 100px; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section h2 {
+    font-size: 2rem;
+  }
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section p {
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Home */
+.logo-center {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.logo-center-img {
+  height: 120px;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+/* About Section */
+.bento-about-section {
+  padding: 4rem 2rem;
+  background: #0e0e0e;
+  color: #ffffff;
+  text-align: center;
+}
+
+.bento-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.bento-description {
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #c0c0c0;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bento-card {
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Products */
+.products-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #0e0e0e;
+  color: #ffffff;
+}
+
+.products-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.products-description {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #c0c0c0;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .product-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.product-image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.product-button {
+  padding: 0.8rem 2rem;
+  background-color: #1e90ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-button:hover {
+  background-color: #007bff;
+}
+
+.product-core {
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(30, 144, 255, 0.2);
+  animation: floatCenter 6s ease-in-out infinite;
+  z-index: 2;
+}
+
+@media (max-width: 500px) {
+  .product-core {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Contact section responsive */
+@media (max-width: 768px) {
+  .contact-heading {
+    font-size: 2rem;
+  }
+
+  .contact-glass {
+    padding: 1.5rem;
+  }
+}
+
+/* Keep other styles as-is... */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: white;
+  font-family: "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -28,18 +332,23 @@ body, html {
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Logo styling */
+/* Logo */
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: #fff;
 }
 
-/* Nav links */
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+/* Nav Links — base (no display defined here) */
 .nav-links {
   list-style: none;
-  display: flex;
-  gap: 1.5rem;
+  margin: 10px;
+  padding: 0;
 }
 
 .nav-links a {
@@ -52,10 +361,50 @@ body, html {
   color: #fff;
 }
 
-/* Sections */
+/* Hamburger menu */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  z-index: 1100;
+}
+
+/* Desktop nav */
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.95);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    gap: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+
+/* Section layout */
 .section {
   min-height: 100vh;
-  padding-top: 100px; /* navbar space */
+  padding-top: 100px;
   padding-left: 2rem;
   padding-right: 5rem;
   display: flex;
@@ -74,7 +423,7 @@ body, html {
   text-align: center;
 }
 
-/* Home logo center */
+/* Home */
 .logo-center {
   font-size: 4rem;
   font-weight: bold;
@@ -82,36 +431,13 @@ body, html {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive nav */
-@media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    top: 80px;
-    right: 0;
-    padding: 1rem;
-    display: none;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-}
-
-.logo-img {
-  height: 40px;
-  width: auto;
-}
-
-/* Center logo on home section */
 .logo-center-img {
   height: 120px;
   width: auto;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
-/* About.css */
 
+/* About Section */
 .bento-about-section {
   padding: 4rem 2rem;
   background: #0e0e0e;
@@ -144,11 +470,11 @@ body, html {
 
 .bento-card {
   padding: 2rem;
+  margin: 1rem;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #ffffff;
   font-size: 1rem;
@@ -160,51 +486,302 @@ body, html {
   transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.08);
 }
-.products-section {
-  text-align: center;
-  padding: 4rem 2rem;
-  background-color: #0e0e0e;
-  color: #ffffff;
+
+/* Products */
+.jersey-feature-container {
+  position: relative;
+  max-width: 300px;
+  margin: 2rem auto;
 }
 
-.products-title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.jersey-logo {
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(0, 132, 255, 0.25);
+  animation: floatCenter 6s ease-in-out infinite;
+  z-index: 1;
+  position: relative;
 }
 
-.products-description {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  color: #c0c0c0;
+.feature-tag {
+  position: absolute;
+  background: linear-gradient(135deg, #1e2a78, #3d51ff);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInTag 1s ease forwards;
+  opacity: 0;
 }
 
-.product-container {
+@keyframes fadeInTag {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Position the tags */
+.top-left     { top: -10%; left: -20%; animation-delay: 0.2s; }
+.top-right    { top: -10%; right: -20%; animation-delay: 0.4s; }
+.bottom-left  { bottom: -10%; left: -20%; animation-delay: 0.6s; }
+.bottom-right { bottom: -10%; right: -20%; animation-delay: 0.8s; }
+
+@media (max-width: 600px) {
+  .feature-tag {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+}
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.contact-section {
+  position: relative;
+  padding: 6rem 2rem;
+  background: #0e0e0e;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
 }
 
-.product-image {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.product-button {
-  padding: 0.8rem 2rem;
-  background-color: #1e90ff;
-  border: none;
-  border-radius: 8px;
+.contact-heading {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
   color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  z-index: 2;
 }
 
-.product-button:hover {
-  background-color: #007bff;
+.glass-bg-drops {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
 }
+
+.drop {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.06);
+  filter: blur(60px);
+  animation: float 8s ease-in-out infinite;
+}
+
+.drop1 {
+  width: 300px; height: 300px;
+  top: 10%; left: 10%;
+}
+
+.drop2 {
+  width: 400px; height: 400px;
+  top: 50%; right: 5%;
+}
+
+.drop3 {
+  width: 250px; height: 250px;
+  bottom: 10%; left: 40%;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}
+
+.contact-glass {
+  max-width: 600px;
+  width: 100%;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
+  color: white;
+  z-index: 1;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.07);
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form button {
+  background: #1e90ff;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #007bff;
+}
+
+.contact-meta {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.contact-meta a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+.products-showcase {
+  position: relative;
+  background: radial-gradient(circle, #0d0d0d 0%, #000000 100%);
+  padding: 6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.products-title {
+  font-size: 2.8rem;
+  color: #fff;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.product-hero {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+.product-core {
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(30, 144, 255, 0.2);
+  animation: floatCenter 6s ease-in-out infinite;
+  z-index: 2;
+}
+
+/* Floating feature tags */
+.feature-tag {
+  position: absolute;
+  background: linear-gradient(135deg, #1e2a78, #3d51ff);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  animation: fadeInTag 1s ease forwards;
+  opacity: 0;
+}
+
+.top-right {
+  top: 15%;
+  right: -5%;
+  animation-delay: 0.3s;
+}
+
+.bottom-left {
+  bottom: 15%;
+  left: -5%;
+  animation-delay: 0.6s;
+}
+
+.top-left {
+  top: 10%;
+  left: -8%;
+  animation-delay: 0.9s;
+}
+
+.bottom-right {
+  bottom: 10%;
+  right: -8%;
+  animation-delay: 1.2s;
+}
+
+.aurora-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.aurora-cursor {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+    rgba(0, 255, 255, 0.4),
+    rgba(0, 132, 255, 0.25),
+    rgba(0, 0, 64, 0.1)
+  );
+  box-shadow:
+    0 0 30px rgba(0, 255, 255, 0.35),
+    0 0 60px rgba(0, 132, 255, 0.3),
+    0 0 90px rgba(0, 132, 255, 0.2),
+    0 0 140px rgba(0, 132, 255, 0.15);
+  filter: blur(12px);
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  animation: aurora-pulse 6s ease-in-out infinite;
+}
+
+@keyframes aurora-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.95;
+  }
+}
+
