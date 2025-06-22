@@ -1,35 +1,44 @@
-import React, { useState } from "react";
+import  { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Particles from "./Particles";
 import TiltedCard from './TiltedCard';
 import ScrollReveal from './ScrollReveal';
 import AuroraCursor from './AuroraCursor';
+import emailjs from "@emailjs/browser";
+import { motion, useMotionValue, useAnimation, useTransform } from "framer-motion";
+
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    // Lock body scroll when menu is open
+    document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+
+    // Optional cleanup (just in case)
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [menuOpen]);
 
   return (
-    <nav className="navbar glass" >
-      <div className="logo">
-        <img src="/images/logo3.png" alt="Zelion Logo" className="logo-img" />
-      </div>
-
-      <div className="menu-toggle" onClick={toggleMenu}>
+    <div className="navbar glass">
+      <img src="/images/logo3.png" alt="Logo" className="logo-img" />
+      <div
+        className="menu-toggle"
+        onClick={() => setMenuOpen(prev => !prev)}
+      >
         ☰
       </div>
-
-      <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li><a href="#contact">Contact Us</a></li>
+      <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
+        <li><a href="#home" onClick={() => setMenuOpen(false)}>Home</a></li>
+        <li><a href="#about" onClick={() => setMenuOpen(false)}>About</a></li>
+        <li><a href="#products" onClick={() => setMenuOpen(false)}>Products</a></li>
+        <li><a href="#gallery" onClick={() => setMenuOpen(false)}>Gallery</a></li>
+        <li><a href="#offers" onClick={() => setMenuOpen(false)}>Offers</a></li>
+        <li><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></li>
       </ul>
-    </nav>
+    </div>
   );
 }
 
@@ -101,6 +110,7 @@ function About() {
         <div className="bento-card">🚚 Fast & Reliable Delivery</div>
         <div className="bento-card">⭐ Trusted by Professionals</div>
         <div className="bento-card">💬 24/7 Customer Support</div>
+        <div className="bento-card">🌐 Global Reach</div>
       </div>
     </section>
   );
@@ -108,22 +118,24 @@ function About() {
 
 function Products() {
   return (
-    <section id="products" className="products-showcase">
-      <h2 className="products-title">Jersey Spotlight</h2>
+   <section id="products" className="products-showcase">
+  <h2 className="products-title">Jersey Spotlight</h2>
 
-      <div className="product-hero">
-        <img
-          src="/images/jrs.png"
-          alt="Jersey"
-          className="product-core"
-        />
+  <div className="product-hero">
+    <img
+      src="/images/jrs.png"
+      alt="Jersey"
+      className="product-core"
+    />
 
-        <div className="feature-tag top-right">PREMIUM FABRIC</div>
-        <div className="feature-tag bottom-left">BREATHABLE DESIGN</div>
-        <div className="feature-tag top-left">CUSTOM FIT</div>
-        <div className="feature-tag bottom-right">ANTI-ODOR TECH</div>
-      </div>
-    </section>
+    {/* Feature Tags */}
+    <div className="feature-tag top-left">CUSTOM FIT</div>
+    <div className="feature-tag top-right">PREMIUM FABRIC</div>
+    <div className="feature-tag bottom-left">PERMEABLE</div>
+    <div className="feature-tag bottom-right">ANTI-ODOR TECH</div>
+  </div>
+</section>
+
   );
 }
 
@@ -173,6 +185,136 @@ const testimonialCardStyle = {
 };
 
 
+function Gallery() {
+  const IMGS = [
+    "/images/cricketkit.png",
+    "/images/helmet.png",
+    "/images/pad.png",
+    "/images/ball1.png",
+    "/images/bat.png",
+    "/images/shorts.png",
+  ];
+
+  const faceCount = IMGS.length;
+  const rotation = useMotionValue(0);
+  const controls = useAnimation();
+  const autoplayRef = useRef(null);
+  const [radius, setRadius] = useState(getRadius());
+
+  function getRadius() {
+    const width = window.innerWidth;
+    if (width < 480) return 180;
+    if (width < 768) return 220;
+    return 350;
+  }
+
+  useEffect(() => {
+    const handleResize = () => setRadius(getRadius());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const angle = 360 / faceCount;
+
+  useEffect(() => {
+    autoplayRef.current = setInterval(() => {
+      rotation.set(rotation.get() - angle);
+    }, 3000);
+    return () => clearInterval(autoplayRef.current);
+  }, [rotation, angle]);
+
+  return (
+    <section id='gallery'className="gallery-section">
+      <h2 className="gallery-title">Gallery</h2>
+
+      <div className="gallery-wrapper">
+        <motion.div
+          style={{ rotateY: rotation }}
+          animate={controls}
+          drag="x"
+          onDrag={(_, info) => rotation.set(rotation.get() + info.offset.x * 0.2)}
+          onDragEnd={(_, info) => {
+            controls.start({
+              rotateY: rotation.get() + info.velocity.x * 0.1,
+              transition: { type: "spring", stiffness: 50, damping: 20 },
+            });
+          }}
+          className="gallery-carousel"
+        >
+          {IMGS.map((src, index) => (
+            <div
+              key={index}
+              className="gallery-item"
+              style={{
+                transform: `rotateY(${index * angle}deg) translateZ(${radius}px)`,
+              }}
+            >
+              <img
+                src={src}
+                alt={`gallery ${index}`}
+                className="gallery-image"
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+function Offers() {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_7vknb2w",
+      "template_qpy7a4p",
+      form.current,
+      "EBAkWCqK5att3Jv3K"
+    )
+    .then(() => {
+      alert("Email sent successfully!");
+      form.current.reset();
+    })
+    .catch((error) => {
+      alert("Failed to send email. Please try again.");
+      console.error(error.text);
+    });
+  };
+
+  return (
+    <section id="offers" className="offers-section">
+      <h2>Get Exclusive Offers</h2>
+
+      {/* Sparkles + Fireworks */}
+      <span className="sparkle sparkle1"></span>
+      <span className="sparkle sparkle2"></span>
+      <span className="sparkle sparkle3"></span>
+      <span className="sparkle sparkle4"></span>
+      <span className="firework fw1"></span>
+      <span className="firework fw2"></span>
+      <span className="firework fw3"></span>
+
+      <div className="offer-banner-wrapper">
+        <img src="images/ball.png" alt="Main Offer" className="offer-image" />
+        <img src="images/offr.png" alt="Side Offer 1" className="offer-image" />
+        <img src="images/bat.png" alt="Side Offer 2" className="offer-image" />
+      </div>
+
+      <form ref={form} onSubmit={sendEmail} className="offer-form">
+        <input
+          type="email"
+          name="user_email"
+          placeholder="your@gmail.com"
+          required
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  );
+}
+
 function ContactUs() {
   return (
     <section id="contact" className="contact-section">
@@ -216,6 +358,8 @@ function App() {
       <About />
       <Products />
       <Testimonials />
+      <Gallery />
+      <Offers />
       <ContactUs />
     </div>
   );
